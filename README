@@ -4,13 +4,27 @@ key value storage systems like memcached.
 
 Protocol is straightforward at the moment. All messages are CRLF terminated.
 
-Client connects and sends 'LOCK <key>\r\n'
-Daemon replies back with 'LOCKED <key>\r\n'
+===============
+Client commands
+===============
 
-Client performs necessary operations and then sends 'UNLOCK\r\n'
-                     OR
-Client may quit as well without unlocking using 'QUIT\r\n'
-In both cases daemon replies back with 'QUIT\r\n' and closes the socket
+'LOCK <key>\r\n'
 
-Dependencies:
+If the key is not locked already, daemon replies back with 'LOCKED <key>\r\n'.
+Otherwise if the same client has locked the key, reply is 
+'LOCK_ALREADY_ACQUIRED\r\n' and if some other client has locked the key, reply
+is 'LOCK_EXISTS\r\n'.
+
+'UNLOCK <key>\r\n'
+If the key is locked, daemon replies back with 'UNLOCKED <key>\r\n'. If this is
+applied on a key not locked, reply is 'LOCK_NEVER_ACQUIRED\r\n'.
+
+'QUIT\r\n'
+If the client is already holding a lock to a key and hasn't unlocked it, the
+reply is 'LOCK_NOT_RELEASED' else the reply sent back is 'QUIT\r\n' as well
+and the connection is closed
+
+============
+Dependencies
+============
 eventlet (Get it using easy_install or pip)

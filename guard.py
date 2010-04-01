@@ -13,8 +13,6 @@ except ValueError:
     print 'Specify a valid port number'
     sys.exit(1)
 
-pool = eventlet.GreenPool()
-
 """Constant responses"""
 BAD_MESSAGE = 'BAD_MESSAGE\r\n'
 LOCK_EXISTS = 'LOCK_EXISTS\r\n'
