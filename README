@@ -1,0 +1,13 @@
+A generic guard process (to be implemented as a daemon) that client processes
+can interact with to gain locked access to keys primarily for updating values in
+key value storage systems like memcached.
+
+Protocol is straightforward at the moment. All messages are CRLF terminated.
+
+Client connects and sends 'LOCK <key>\r\n'
+Daemon replies back with 'LOCKED <key>\r\n'
+
+Client performs necessary operations and then sends 'UNLOCK\r\n'
+                     OR
+Client may quit as well without unlocking using 'QUIT\r\n'
+In both cases daemon replies back with 'QUIT\r\n' and closes the socket
