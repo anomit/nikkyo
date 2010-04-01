@@ -11,3 +11,6 @@ Client performs necessary operations and then sends 'UNLOCK\r\n'
                      OR
 Client may quit as well without unlocking using 'QUIT\r\n'
 In both cases daemon replies back with 'QUIT\r\n' and closes the socket
+
+Dependencies:
+eventlet (Get it using easy_install or pip)
